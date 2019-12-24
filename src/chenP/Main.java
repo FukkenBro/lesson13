@@ -62,7 +62,8 @@ public class Main {
         System.out.println(CustomList.string());
         CustomList.sort();
         System.out.println(CustomList.string());
-
+//toString test
+//        System.out.println(CustomList.toString());
     }
 
     private static void printList(List<Integer> list) {

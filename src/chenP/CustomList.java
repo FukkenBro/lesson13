@@ -46,16 +46,7 @@ public class CustomList {
 
     public static void add(int value) {
         try {
-            if (arr.length == 0) {
-                int[] tmp = new int[1];
-                tmp[0] = value;
-                arr = tmp;
-                return;
-            }
-            int[] tmp = new int[arr.length + 1];
-            System.arraycopy(arr, 0, tmp, 0, arr.length);
-            tmp[tmp.length - 1] = value;
-            arr = tmp;
+            add(size(), value);
         } catch (Exception e) {
             System.out.println("add method error");
         }
@@ -77,11 +68,23 @@ public class CustomList {
 
     public static void add(int index, int value) {
         try {
+            if (arr.length == 0) {
+                int[] tmp = new int[1];
+                tmp[0] = value;
+                arr = tmp;
+                return;
+            }
             if (indexValidator(index) >= 0) {
-                int[] tmp = new int[arr.length + 1];
+                if (size() == 0) {
+                    int[] tmp = new int[1];
+                    tmp[0] = value;
+                    arr = tmp;
+                    return;
+                }
+                int[] tmp = new int[size() + 1];
                 System.arraycopy(arr, 0, tmp, 0, index);
                 tmp[index] = value;
-                System.arraycopy(arr, index, tmp, index + 1, arr.length - index);
+                System.arraycopy(arr, index, tmp, index + 1, size() - index);
                 arr = tmp;
             } else {
                 indexError();
@@ -136,33 +139,31 @@ public class CustomList {
     }
 
     private static int indexValidator(int index) {
-        /**
-         * Если индекс > 0 - return 1
-         * Если индекс == 0 - return 0
-         * Если index out of range return < 0
-         * Если index < 0 - return -1
-         * Если индекс > arr.length - return -2
-         */
         try {
-            if (index > 0 && index < arr.length) {
+            if (index > 0 && index <= size()) {
                 return 1;
             }
             if (index == 0) {
                 return 0;
             }
             if (index < 0) {
-                return (-1);
+                return -1;
             }
-            if (index >= arr.length) {
+            if (index > size()) {
                 return -2;
             } else {
                 System.out.println("validator error");
-                return Integer.parseInt(null);
+                return -3;
             }
         } catch (Exception e) {
             System.out.println("validator error");
-            return Integer.parseInt(null);
+            return -3;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CustomList{}" + Arrays.toString(getArr());
     }
 
     public static String string() {
